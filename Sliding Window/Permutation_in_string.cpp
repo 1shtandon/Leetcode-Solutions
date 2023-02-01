@@ -1,3 +1,11 @@
+/*
+Approach : Sliding Window
+1. We maintain a window of size s1.length() in s2.
+2. We maintain a map to store the frequency of characters in the window.
+3. If the map of s1 and the map of the window are equal, then we have found a permutation.
+4. We remove the leftmost character from the map and add the rightmost character to the map.
+5. We repeat the process until the right pointer reaches the end of the string.
+*/
 class Solution
 {
 public:
