@@ -31,7 +31,7 @@ public:
             for (int j = 0; j < len1; j++)
             {
                 // if nextword is shorter than return false
-                if (j > len2)
+                if (j >= len2)
                     return false;
 
                 if (currWord[j] != nextWord[j])
