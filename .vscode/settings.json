@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "*.html": "html",
-        "vector": "cpp"
+        "vector": "cpp",
+        "*.tcc": "cpp",
+        "list": "cpp"
     }
 }
