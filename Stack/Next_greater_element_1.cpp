@@ -6,7 +6,7 @@ public:
         int n = nums2.size();
 
         // storing next greater elements for whole array
-        vector<int> nextGreaterElements(n, -1);
+        vector<int> nextGreaterElements(n);
         // storing indexes in a map
         unordered_map<int, int> indexes;
         // stack for implentation
