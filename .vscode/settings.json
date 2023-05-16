@@ -3,6 +3,7 @@
         "*.html": "html",
         "vector": "cpp",
         "*.tcc": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "charconv": "cpp"
     }
 }

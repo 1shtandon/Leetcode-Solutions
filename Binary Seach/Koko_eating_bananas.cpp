@@ -13,20 +13,29 @@ Space Complexity: O(1)
 class Solution
 {
 public:
+    long long timeTaken(vector<int> &piles, int speed)
+    {
+
+        long long time = 0;
+        for (int i = 0; i < piles.size(); i++)
+        {
+            time += ceil((long double)piles[i] / speed);
+        }
+        return time;
+    }
+
     int minEatingSpeed(vector<int> &piles, int h)
     {
-        int n = piles.size();
-        long long low = 1, high = 1e9;
-        long long res = 0;
+        // the minimum eating speed is 1
+        // the maximum eating speed is the maximum number of bananas in a pile
+        // now apply binary search on the answer to find if with this speed, piles can be finished or
+        int low = 1, high = *max_element(piles.begin(), piles.end());
+        int res = high;
         while (low <= high)
         {
-            long long mid = low + (high - low) / 2;
-            long long hours = 0;
-            for (int i = 0; i < n; i++)
-            {
-                hours += (long long)(piles[i] + mid - 1) / mid;
-            }
-            if (hours <= h)
+            int mid = low + (high - low) / 2;
+            long long time = timeTaken(piles, mid);
+            if (time <= h)
             {
                 res = mid;
                 high = mid - 1;
