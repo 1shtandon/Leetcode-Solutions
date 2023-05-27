@@ -41,3 +41,42 @@ public:
         return res;
     }
 };
+
+
+/*
+Priority queue approach 
+*/
+
+
+class Solution
+{
+public:
+    vector<int> maxSlidingWindow(vector<int> &nums, int k)
+    {
+        int n = nums.size();
+        priority_queue<pair<int , int>> pq;
+        vector<int> res;
+
+        // implementing sliding window
+        int left = 0, right = 0;
+        while (right < n)
+        {
+            pq.push({nums[right] , right});            
+
+            if (right - left + 1 < k)
+                right++;
+
+            else if (right - left + 1 == k)
+            {
+                while(pq.top().second < left)
+                    pq.pop();
+                
+                res.push_back(pq.top().first);
+
+                left++;
+                right++;
+            }
+        }
+        return res;
+    }
+};
