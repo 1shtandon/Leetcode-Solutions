@@ -4,29 +4,33 @@ public:
     ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
     {
         ListNode *dummyHead = new ListNode(0);
-        ListNode *currentNode = dummyHead;
+        ListNode *currNode = dummyHead;
 
         while (list1 and list2)
         {
-            if (list1->val > list2->val)
+            if (list1->val >= list2)
             {
-                currentNode->next = list2;
+                currNode->next = list2;
                 list2 = list2->next;
             }
             else
             {
-                currentNode->next = list1;
+                currNode->next = list1;
                 list1 = list1->next;
             }
-            currentNode = currentNode->next;
+
+            currNode = currNode->next;
         }
 
-        if(list1)
+        // if still some list remaining , then rest of it goes now
+        if (list1)
         {
-            currentNode->next = list1;
+            currNode->next = list1;
         }
-        else
-            currentNode->next = list2;
+        else if (list2)
+        {
+            currNode->next = list2;
+        }
 
         return dummyHead->next;
     }
