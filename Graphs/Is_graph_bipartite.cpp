@@ -57,3 +57,56 @@ public:
         return true;
     }
 };
+
+// depth first search approach
+
+class Solution
+{
+public:
+    bool dfs(vector<vector<int>> &graph, vector<int> &color, int curr, int col)
+    {
+
+        // color the current node
+        color[curr] = col;
+
+        // for all the neighbours
+        for (auto &neighbour : graph[curr])
+        {
+            // if neighbour is not colored
+            if (color[neighbour] == -1)
+            {
+                // if neighbour can't be colored with alternate color then return false
+                if (!dfs(graph, color, neighbour, 1 - col))
+                    return false;
+            }
+
+            // if neighbour has same color then return false
+            else if (color[neighbour] == color[curr])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool isBipartite(vector<vector<int>> &graph)
+    {
+        // number of nodes
+        int n = graph.size();
+        // inititally no node is colored so -1
+        vector<int> color(n, -1);
+
+        for (int i = 0; i < n; i++)
+        {
+            if (color[i] == -1)
+            {
+                // if any component is not bipartite then return false
+                if (!dfs(graph, color, i, 0))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+};
