@@ -3,7 +3,7 @@ class Solution
 public:
     int findCheapestPrice(int n, vector<vector<int>> &flights, int src, int dst, int k)
     {
-        //priority queue wont work here as it will give shortest path but might not follow k stops and stop other paths that can reach in k stops but have more weight
+        // priority queue wont work here as it will give shortest path but might not follow k stops and stop other paths that can reach in k stops but have more weight
 
         // making adjacency list to store  {weight, stops}
         vector<pair<int, int>> adj[n];
