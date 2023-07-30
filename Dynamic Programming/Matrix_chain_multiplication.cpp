@@ -65,3 +65,6 @@ int matrixMultiplication(vector<int> &arr, int n)
 
     return dp[1][n - 1];
 }
+
+// Time complexity for tabulation solution : O(N^3)
+// Space complexity for tabulation solution : O(N^2)
