@@ -35,3 +35,44 @@ public:
         return recursion(1, sz, cuts, dp);
     }
 };
+
+/*
+Tabulation solution
+*/
+
+class Solution
+{
+public:
+    int minCost(int n, vector<int> &cuts)
+    {
+        // if we sort the cuts array, then partitions after cutting can be solved separately
+        int sz = cuts.size();
+
+        vector<vector<int>> dp(sz + 2, vector<int>(sz + 2, 0));
+
+        cuts.push_back(n);
+        cuts.push_back(0);
+        sort(cuts.begin(), cuts.end());
+
+        for (int i = sz; i >= 1; i--)
+        {
+            for (int j = 1; j <= sz; j++)
+            {
+                if (i > j)
+                    continue;
+
+                int mini = INT_MAX;
+
+                for (int k = i; k <= j; k++)
+                {
+                    int cost = (cuts[j + 1] - cuts[i - 1]) + dp[i][k - 1] + dp[k + 1][j];
+                    mini = min(mini, cost);
+                }
+                
+                dp[i][j] = mini;
+            }
+        }
+
+        return dp[1][sz];
+    }
+};
