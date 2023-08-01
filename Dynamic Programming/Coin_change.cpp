@@ -17,7 +17,7 @@ public:
             {
                 dp[0][i] = INT_MAX;
             }
-        }
+        } 
 
         for (int i = 1; i < n; i++)
         {
