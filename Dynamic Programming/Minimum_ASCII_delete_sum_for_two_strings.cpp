@@ -1,36 +1,61 @@
-class Solution
-{
+class Solution {
 public:
-    int minimumDeleteSum(string word1, string word2)
-    {
-        int m = word1.size(), n = word2.size();
-        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
 
-        for (int i = 1; i <= m; i++)
+    // int fun(int i , int j , string &s , string &t , vector<vector<int>> &dp)
+    // {
+    //     // both strings get empty
+    //     if(i < 0 and j < 0)
+    //         return 0;
+
+    //     if(i < 0 and j >= 0)
+    //         return t[j] + fun(i , j - 1 , s , t, dp);
+        
+    //     if(j < 0 and i >= 0)
+    //         return s[i] + fun(i - 1, j , s , t, dp);
+
+    //     if(dp[i][j] != -1)
+    //         return dp[i][j];
+
+    //     // no need to delete
+    //     if(s[i] == t[j])        
+    //         return dp[i][j] = fun(i - 1, j - 1, s , t , dp);
+
+    //     return dp[i][j] = min(s[i] + fun(i - 1 , j , s , t , dp) , t[j] + fun(i , j - 1 , s , t , dp));
+    // }
+
+    int minimumDeleteSum(string s, string t) {
+        int n = s.length() , m = t.length();
+        // vector<vector<int>> dp(n + 1 , vector<int> (m + 1 , 0));
+
+        // space optimization
+        vector<int> prev(m + 1 , 0);
+        vector<int> curr(m + 1 , 0);
+
+        // for(int i = 1; i <= n; i++)
+        // {
+        //     dp[i][0] = s[i - 1] + dp[i - 1][0];
+        // }
+
+        for(int j = 1; j <= m; j++)
         {
-            dp[i][0] = dp[i - 1][0] + word1[i - 1];
-        }
-        for (int j = 1; j <= n; j++)
-        {
-            dp[0][j] = dp[0][j - 1] + word2[j - 1];
+            prev[j] = t[j - 1] + prev[j - 1];
         }
 
-        for (int i = 1; i <= m; i++)
+        for(int i = 1; i <= n; i++)
         {
-            for (int j = 1; j <= n; j++)
+            curr[0] = s[i - 1] + prev[0];
+            for(int j = 1; j <= m; j++)
             {
-                if (word1[i - 1] == word2[j - 1])
-                {
-                    dp[i][j] = dp[i - 1][j - 1];
-                }
-
+                if(s[i - 1] == t[j - 1])
+                    curr[j] =  prev[j - 1];
+                
                 else
-                {
-                    dp[i][j] = min(dp[i - 1][j] + word1[i - 1], dp[i][j - 1] + word2[j - 1]);
-                }
+                    curr[j] = min(s[i - 1] + prev[j] , t[j - 1] + curr[j - 1]);
             }
+
+            prev = curr;
         }
 
-        return dp[m][n];
+        return prev[m];
     }
 };
