@@ -1,33 +1,53 @@
 class Solution
 {
 public:
-    int longestCommonSubsequence(string text1, string text2)
-    {
-        int n = text1.length(), m = text2.length();
+    // int fun(int i , int j, string &s , string &t , vector<vector<int>> &dp)
+    // {
+    //     if(i < 0 or j < 0)
+    //         return 0;
 
-        // f(i1 , i2) recursion means lcs till i1 index of str1 and i2 index of str2
-        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+    //     if(dp[i][j] != -1)
+    //         return dp[i][j];
+
+    //     if(s[i] == t[j])
+    //         return dp[i][j] = 1 + fun(i - 1, j - 1, s, t , dp);
+
+    //     return dp[i][j] = max(fun(i - 1, j , s, t , dp) , fun(i , j - 1 , s , t , dp));
+    // }
+
+    int longestCommonSubsequence(string s, string t)
+    {
+        int n = s.length(), m = t.length();
+
+        // vector<vector<int>> dp(n + 1, vector<int> (m + 1 , 0));
+
+        vector<int> prev(m + 1, 0);
+        vector<int> curr(m + 1, 0);
+
+        if (n == 0 or m == 0)
+            return 0;
 
         for (int i = 0; i <= n; i++)
         {
             for (int j = 0; j <= m; j++)
             {
-                //    matched
                 if (i == 0 or j == 0)
                 {
-                    dp[i][j] = 0;
+                    curr[j] = 0;
                 }
-                else if (text1[i - 1] == text2[j - 1])
+                else if (s[i - 1] == t[j - 1])
                 {
-                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    curr[j] = 1 + prev[j - 1];
                 }
                 else
                 {
-                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+                    curr[j] = max(prev[j], curr[j - 1]);
                 }
             }
+
+            prev = curr;
         }
 
-        return dp[n][m];
+        return prev[m];
     }
 };
