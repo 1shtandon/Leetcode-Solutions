@@ -1,26 +1,62 @@
 class Solution
 {
 public:
+    // int fun(int idx , int &n , unordered_set<string> &st , string &s , vector<int> &dp)
+    // {
+    //     // base case
+    //     if(idx >= n)
+    //         return 0;
+
+    //     if(dp[idx] != -1)
+    //         return dp[idx];
+
+    //     string str = "";
+    //     int res = n;
+
+    //     for(int i = idx; i < n; i++)
+    //     {
+    //         str.push_back(s[i]);
+
+    //         int currExtra;
+    //         if(st.count(str))
+    //             currExtra = 0;
+    //         else
+    //             currExtra = str.length();
+
+    //         int newExtra = fun(i + 1 , n , st , s , dp);
+
+    //         res = min(res , currExtra + newExtra);
+    //     }
+
+    //     return dp[idx] = res;
+    // }
+
     int minExtraChar(string s, vector<string> &dictionary)
     {
-        int n = s.size();
-        vector<int> dp(n + 1, INT_MAX);
-        dp[0] = 0;
-        unordered_set<string> dict(dictionary.begin(), dictionary.end());
-        for (int i = 1; i <= n; i++)
+        int n = s.length();
+        unordered_set<string> st;
+
+        for (auto &s : dictionary)
+            st.insert(s);
+
+        vector<int> dp(51, n);
+
+        dp[n] = 0;
+
+        for (int idx = n - 1; idx >= 0; idx--)
         {
-            dp[i] = dp[i - 1] + 1;
-            // for every i, we check if s[j-1 .. i-1] is present in the dictionary
-            // if it is present, then assign min of existing dp[i] and dp[j-1], such that dp[j-1] is
-            //  the minimum number of extra characters required to make s[0 .. j-1] present in the dictionary
-            for (int j = i; j >= 1; j--)
+            string str = "";
+            for (int i = idx; i < n; i++)
             {
-                if (dict.count(s.substr(j - 1, i - j + 1)))
-                {
-                    dp[i] = min(dp[i], dp[j - 1]);
-                }
+                str.push_back(s[i]);
+
+                int currExtra = (st.count(str) == 1) ? 0 : str.length();
+                int newExtra = dp[i + 1];
+
+                dp[idx] = min(dp[idx], currExtra + newExtra);
             }
         }
-        return dp[n];
+
+        return dp[0];
     }
 };
