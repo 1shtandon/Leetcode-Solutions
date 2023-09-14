@@ -40,3 +40,55 @@ public:
         return nums1;
     }
 };
+
+
+
+
+
+
+#include <iostream>
+#include <vector>
+using namespace std;
+ 
+class Solution {
+public:
+    vector<long long>
+    nextLargerElement(vector<long long> arr, int n)
+    {
+
+        vector<long long> v(n, -1);
+
+        long long mx = arr[n - 1];
+ 
+        // Iterate over the array from right to left.
+        for (int i = n - 2; i >= 0; i--) {
+
+            if (arr[i + 1] > arr[i]) {
+                v[i] = arr[i + 1];
+            }
+            else {
+
+                if (v[i + 1] > arr[i]) {
+                    v[i] = v[i + 1];
+                }
+                else if (mx > arr[i]) {
+
+                    int k = i + 1;
+
+                    while (arr[k] <= arr[i]) {
+                        k++;
+                    }
+                    v[i] = arr[k];
+                }
+                else {
+
+                    v[i] = -1;
+                }
+            }
+            // Update the maximum element seen so far.
+            mx = max(arr[i], mx);
+        }
+
+        return v;
+    }
+};
